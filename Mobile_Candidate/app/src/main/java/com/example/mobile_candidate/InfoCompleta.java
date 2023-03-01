@@ -6,10 +6,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.mobile_candidate.Adapter.ApiAdapter;
 
 public class InfoCompleta extends AppCompatActivity {
     private TextView txtvTelefono, txtvDireccion, tx_Name1;
@@ -19,7 +17,6 @@ public class InfoCompleta extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.item_infocompleta);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         imgvPersona = findViewById(R.id.imgvPersona);
         tx_Name1 = findViewById(R.id.tx_Name1);

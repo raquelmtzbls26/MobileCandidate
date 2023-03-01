@@ -34,8 +34,6 @@ public class MainActivity extends AppCompatActivity {
     private ChipGroup chipGroup;
     private Chip  filtro_hombre, filtro_mujer,resetfiltro;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
 
                     apiAdapter = new ApiAdapter(personas,getApplicationContext());
                     recyclerView.setAdapter(apiAdapter);
-                    //recyclerView.setVisibility(View.VISIBLE);
                 }
             }
             @Override

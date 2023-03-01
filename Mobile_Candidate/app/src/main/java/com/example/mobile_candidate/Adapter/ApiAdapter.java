@@ -33,7 +33,6 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
         this.context = context;
     }
 
-
     //Se encarga de especificar el xml
     @NonNull
     @Override
@@ -75,7 +74,6 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        //private ImageView im_Persona;
         private TextView Tx_Name, Tx_Email, Tx_Genero, txtvTelefono, txtvDireccion,tx_Name1;
         private ImageView imgvPersona;
         private CardView cardView;
