@@ -1,14 +1,20 @@
 package com.example.mobile_candidate;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -16,9 +22,11 @@ import com.example.mobile_candidate.Adapter.ApiAdapter;
 import com.example.mobile_candidate.Interfaz.APIPersonInterface;
 import com.example.mobile_candidate.Interfaz.APIResponse;
 import com.example.mobile_candidate.Modelo.Result;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -26,18 +34,33 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+import util.OcultarTecladoAdaptador;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private RecyclerView recyclerView;
     private ApiAdapter apiAdapter;
     private ChipGroup chipGroup;
     private Chip  filtro_hombre, filtro_mujer,resetfiltro;
+    SearchView txtBuscar;
 
+    ShimmerFrameLayout shimmermain;
+    private CardView cardView1, cardViewCarga1;
+
+    private RelativeLayout relativeLayout;
+
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
+
+      //  shimmermain = findViewById(R.id.shimmermain);
+
+        txtBuscar = findViewById(R.id.txtBuscar);
+        txtBuscar.setOnQueryTextListener(this);
+        relativeLayout = findViewById(R.id.relativeLayout);
+        relativeLayout.setOnClickListener(new OcultarTecladoAdaptador(this ));
 
         recyclerView = findViewById(R.id.rv_persona);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
@@ -57,15 +80,20 @@ public class MainActivity extends AppCompatActivity {
 
         Call<APIResponse> call = apipersona.getApiresult("50", gender);
 
+        /*shimmermain.setVisibility(View.VISIBLE);
+        shimmermain.startShimmer();*/
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
                 if(response.isSuccessful()){
                     APIResponse personaList = response.body();
-                    List<Result> personas= personaList.results;
+                    ArrayList<Result> personas= personaList.results;
 
                     apiAdapter = new ApiAdapter(personas,getApplicationContext());
                     recyclerView.setAdapter(apiAdapter);
+
+                  /*  shimmermain.setVisibility(View.GONE);
+                    shimmermain.stopShimmer();*/
                 }
             }
             @Override
@@ -105,7 +133,17 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
+
+    @Override
+    public boolean onQueryTextSubmit(String s) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String s) {
+        apiAdapter.filtrado(s);
+        return false;
+    }
 }

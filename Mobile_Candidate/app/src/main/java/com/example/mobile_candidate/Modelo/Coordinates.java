@@ -19,4 +19,9 @@ public class Coordinates {
     public void setLongitude(String value) {
         this.longitude = value;
     }
+
+    public String getFullCoordenadas()
+    {
+        return (getLongitude() + " , " + getLatitude());
+    }
 }

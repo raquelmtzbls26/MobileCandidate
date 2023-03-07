@@ -6,7 +6,6 @@
     android:orientation="vertical"
     app:layout_marginBaseline="1dp">
 
-
     <androidx.cardview.widget.CardView
         android:id="@+id/tarjeta"
         android:layout_width="match_parent"
@@ -17,7 +16,9 @@
         android:layout_marginBottom="14dp"
         android:backgroundTint="@color/white"
         android:gravity="center"
-        app:cardCornerRadius="10dp">
+        app:cardCornerRadius="10dp"
+        android:visibility="gone">
+
 
         <TextView
             android:id="@+id/textView"
@@ -64,20 +65,96 @@
                 android:textAlignment="center"
                 android:textColor="#044BD8"
                 android:textSize="20sp"
-                android:textStyle="bold" />
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/txtvVCell"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="15dp"
+                android:textAlignment="center"
+                android:textColor="#044BD8"
+                android:textSize="20sp"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/txtvDireccion"
                 android:layout_width="match_parent"
-                android:layout_height="80dp"
+                android:layout_height="150dp"
                 android:layout_margin="15dp"
                 android:textAlignment="center"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Latitud:" />
+
+                <EditText
+                    android:id="@+id/edtLatitud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberSigned|numberDecimal"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Longitud:" />
+
+                <EditText
+                    android:id="@+id/edtLongitud"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ems="10"
+                    android:inputType="numberSigned|numberDecimal"
+                     />
+            </LinearLayout>
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+    <com.facebook.shimmer.ShimmerFrameLayout
+        android:id="@+id/shimmerinfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:shimmer_auto_start="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cargatarjeta"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="14dp"
+            android:layout_marginBottom="14dp"
+            android:backgroundTint="@color/white"
+            android:gravity="center"
+            app:cardCornerRadius="10dp">
+            <include layout="@layout/item_cargando"/>
+        </androidx.cardview.widget.CardView>
+    </com.facebook.shimmer.ShimmerFrameLayout>
 
 </RelativeLayout>

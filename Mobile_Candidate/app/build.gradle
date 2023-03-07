@@ -41,4 +41,10 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
 
     implementation 'com.github.bumptech.glide:glide:4.14.2'
+    //Shimmer Facebook
+    implementation 'com.facebook.shimmer:shimmer:0.5.0'
+    //Cargar la imagen
+    implementation 'com.github.bumptech.glide:glide:4.15.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.15.0'
+
 }
