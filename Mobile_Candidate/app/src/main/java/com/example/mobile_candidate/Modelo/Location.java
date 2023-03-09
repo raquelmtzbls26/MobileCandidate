@@ -68,6 +68,6 @@ public class Location {
     public String getFullAddress()
     {
         return (street.getName()+" "+street.getNumber()+", "+city+"\n"+
-                " "+poscode+", "+state+ ", "+country + "; lat"+ coordinates.getLatitude() + " log " + coordinates.getLongitude());
+                " "+poscode+", "+state+ ", "+country);
     }
 }

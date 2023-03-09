@@ -44,8 +44,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     private Chip  filtro_hombre, filtro_mujer,resetfiltro;
     SearchView txtBuscar;
 
-    ShimmerFrameLayout shimmermain;
-    private CardView cardView1, cardViewCarga1;
 
     private RelativeLayout relativeLayout;
 
@@ -54,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main1);
-
-      //  shimmermain = findViewById(R.id.shimmermain);
 
         txtBuscar = findViewById(R.id.txtBuscar);
         txtBuscar.setOnQueryTextListener(this);
@@ -80,8 +76,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
         Call<APIResponse> call = apipersona.getApiresult("50", gender);
 
-        /*shimmermain.setVisibility(View.VISIBLE);
-        shimmermain.startShimmer();*/
         call.enqueue(new Callback<APIResponse>() {
             @Override
             public void onResponse(Call<APIResponse> call, Response<APIResponse> response) {
@@ -92,8 +86,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                     apiAdapter = new ApiAdapter(personas,getApplicationContext());
                     recyclerView.setAdapter(apiAdapter);
 
-                  /*  shimmermain.setVisibility(View.GONE);
-                    shimmermain.stopShimmer();*/
                 }
             }
             @Override

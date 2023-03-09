@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.mobile_candidate.InfoCompleta;
+import com.example.mobile_candidate.LoginActivity;
 import com.example.mobile_candidate.Modelo.Result;
 import com.example.mobile_candidate.R;
 
@@ -67,19 +70,28 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
             holder.Tx_Genero.setText("Genero: " + apipersona.get(position).getGender());
         }
 
+        /*holder.userEdt.setText(apipersona.get(position).getLogin().getUsername());
+        holder.passEdt.setText(apipersona.get(position).getLogin().getPassword());*/
+
         holder.cardView.setAnimation(AnimationUtils.loadAnimation(context, R.anim.slide));
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    Intent intent = new Intent(context, InfoCompleta.class);
+
+                    Intent intent = new Intent(context, LoginActivity.class);
+                    intent.putExtra("username", apipersona.get(position).getLogin().getUsername());
+                    intent.putExtra("password", apipersona.get(position).getLogin().getPassword());
                     intent.putExtra("name", apipersona.get(position).getName().getFullName());
                     intent.putExtra("picture", apipersona.get(position).getPicture().getLarge());
                     intent.putExtra("phone", apipersona.get(position).getPhone());
                     intent.putExtra("cell", apipersona.get(position).getCell());
                     intent.putExtra("location", apipersona.get(position).getLocation().getFullAddress());
-                    intent.putExtra("location1", apipersona.get(position).getLocation().getCoordinates().getFullCoordenadas());
+                    intent.putExtra("latitud", apipersona.get(position).getLocation().getCoordinates().getLatitude());
+                    intent.putExtra("longitud", apipersona.get(position).getLocation().getCoordinates().getLongitude());
+
                     context.startActivity(intent);
+
                 }catch (Exception e){
                     e.printStackTrace();
                 }
@@ -109,9 +121,12 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        private TextView Tx_Name, Tx_Email, Tx_Genero, txtvTelefono, txtvDireccion,tx_Name1,txtvVCell;
+        private TextView Tx_Name, Tx_Email, Tx_Genero, txtvTelefono, txtvDireccion,tx_Name1,txtvVCell, txtLatitud, txtLongitud, userEdt;
+        private  EditText passEdt;
         private ImageView imgvPersona, imgPersonaMain;
         private CardView cardView,cardViewCarga1;
+        //private EditText userEdt, passEdt;
+        private Button loginBtn;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -127,6 +142,13 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
             cardView = itemView.findViewById(R.id.tarjeta);
             cardViewCarga1 = itemView.findViewById(R.id.cargatarjeta1);
 
+            txtLatitud = itemView.findViewById(R.id. txtLatitud);
+            txtLongitud = itemView.findViewById(R.id.txtLongitud);
+
+            userEdt = itemView.findViewById(R.id.edtUser);
+            passEdt = itemView.findViewById(R.id.edtPassword);
+            loginBtn = itemView.findViewById(R.id.btnLogin);
+
             Tx_Email.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -137,15 +159,6 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
                 }
             });
 
-          /*  txtvDireccion.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("geo:" + txtvDireccion.getText().toString()));
-                    context.startActivity(intent);
-                }
-            });
-*/
-
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
@@ -155,12 +168,6 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
             }, 2000);
         }
 
-     /*   public void enviar(View v){
-            Intent intent = new Intent(Intent.ACTION_SENDTO);
-            intent.setData(Uri.parse("mailto:"));
-            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{Tx_Email.getText().toString()});
-            context.startActivity(intent);
-        }*/
     }
 
 }

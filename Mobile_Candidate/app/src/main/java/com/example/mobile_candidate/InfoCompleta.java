@@ -20,15 +20,13 @@ import com.example.mobile_candidate.Modelo.Location;
 import com.facebook.shimmer.ShimmerFrameLayout;
 
 public class InfoCompleta extends AppCompatActivity {
-    private TextView txtvTelefono, txtvDireccion, tx_Name1,txtvVCell;
+    private TextView txtvTelefono, txtvDireccion, tx_Name1,txtvVCell, txtLatitud, txtLongitud;
     private ImageView imgvPersona;
     private ScaleGestureDetector detector;
     private float xBegin = 0;
     private float yBegin = 0;
     ShimmerFrameLayout shimmerinfo;
     private CardView cardView, cardViewCarga;
-    private EditText edtLatitud, edtLongitud;
-
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,24 +49,27 @@ public class InfoCompleta extends AppCompatActivity {
 
 
         Intent intent = getIntent();
-        String name = intent.getExtras().getString("name");
+        DatosObj datosObj = intent.getParcelableExtra("datosObj");
+
+        /*String name = intent.getExtras().getString("name");
         String phone = intent.getExtras().getString("phone");
         String cell = intent.getExtras().getString("cell");
         String location = intent.getExtras().getString("location");
         String picture = intent.getExtras().getString("picture");
-        String location1 = intent.getExtras().getString("location1");
+        String latitud = intent.getExtras().getString("latitud");
+        String longitud = intent.getExtras().getString("longitud");*/
 
-        tx_Name1.setText("Nombre: " + name);
-        txtvTelefono.setText("Telefono: "+ phone);
-        txtvVCell.setText("Celular: "+ cell);
-        txtvDireccion.setText("Direccion: " + location);
-        Glide.with(getApplicationContext()).load(picture).into(imgvPersona);
+        tx_Name1.setText(datosObj.getName()); //"Nombre: " + name);
+        txtvTelefono.setText(datosObj.getPhone());//"Telefono: "+ phone);
+        txtvVCell.setText(datosObj.getCell());//"Celular: "+ cell);
+        txtvDireccion.setText(datosObj.getLocation()); // location);
+        Glide.with(getApplicationContext()).load(datosObj.getPicture()).into(imgvPersona);//picture).into(imgvPersona);
 
         txtvTelefono.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(Intent.ACTION_DIAL);
-                intent1.setData(Uri.parse("tel:+" + phone));
+                intent1.setData(Uri.parse("tel:+" + datosObj.getPhone()));
                 startActivity(intent1);
             }
         });
@@ -77,26 +78,22 @@ public class InfoCompleta extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent1 = new Intent(Intent.ACTION_DIAL);
-                intent1.setData(Uri.parse("tel:+" + cell));
+                intent1.setData(Uri.parse("tel:+" + datosObj.getCell()));
                 startActivity(intent1);
             }
         });
 
-        edtLatitud  = findViewById(R.id.edtLatitud);
-        edtLongitud = findViewById(R.id.edtLongitud);
+        txtLatitud  = findViewById(R.id.txtLatitud);
+        txtLongitud = findViewById(R.id.txtLongitud);
 
+        txtLatitud.setText(datosObj.getLatitud());//latitud);
+        txtLongitud.setText(datosObj.getLongitud());//longitud);
         txtvDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*Location locationCord = new Location();
-                Coordinates longitud = new Coordinates();
-                String location1  = "25.520000610259583";
-                String latitud = "-103.40321078220909";
-
-                String uri = "geo:" + latitud + ","location1;*/
-                String latitud = edtLatitud.getText().toString();
-                String longitud = edtLongitud.getText().toString();
-                String uri = "geo:"+ latitud + "," + longitud;
+                String latitud = txtLatitud.getText().toString();
+                String longitud = txtLongitud.getText().toString();
+                String uri = "geo:"+ latitud + " , " + longitud;
 
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
@@ -112,7 +109,7 @@ public class InfoCompleta extends AppCompatActivity {
                 cardViewCarga.setVisibility(View.GONE);
                 cardView.setVisibility(View.VISIBLE);
             }
-        }, 2000);
+        }, 1500);
     }
 
     public boolean onTouchEvent(MotionEvent event){
