@@ -80,7 +80,8 @@
                     android:paddingLeft="8dp"
                     android:textColor="#001497"
                     android:textSize="18sp"
-                    android:textStyle="italic" />
+                    android:textStyle="italic"
+                    android:drawableEnd="@drawable/baseline_mail_outline_24"/>
 
             </LinearLayout>
         </LinearLayout>

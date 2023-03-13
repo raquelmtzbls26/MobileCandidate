@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
@@ -18,8 +19,14 @@ import com.bumptech.glide.Glide;
 import com.example.mobile_candidate.Modelo.Coordinates;
 import com.example.mobile_candidate.Modelo.Location;
 import com.facebook.shimmer.ShimmerFrameLayout;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-public class InfoCompleta extends AppCompatActivity {
+public class InfoCompleta extends AppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapClickListener, GoogleMap.OnMapLongClickListener {
     private TextView txtvTelefono, txtvDireccion, tx_Name1,txtvVCell, txtLatitud, txtLongitud;
     private ImageView imgvPersona;
     private ScaleGestureDetector detector;
@@ -27,6 +34,8 @@ public class InfoCompleta extends AppCompatActivity {
     private float yBegin = 0;
     ShimmerFrameLayout shimmerinfo;
     private CardView cardView, cardViewCarga;
+
+    GoogleMap mMapa;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,14 +59,6 @@ public class InfoCompleta extends AppCompatActivity {
 
         Intent intent = getIntent();
         DatosObj datosObj = intent.getParcelableExtra("datosObj");
-
-        /*String name = intent.getExtras().getString("name");
-        String phone = intent.getExtras().getString("phone");
-        String cell = intent.getExtras().getString("cell");
-        String location = intent.getExtras().getString("location");
-        String picture = intent.getExtras().getString("picture");
-        String latitud = intent.getExtras().getString("latitud");
-        String longitud = intent.getExtras().getString("longitud");*/
 
         tx_Name1.setText(datosObj.getName()); //"Nombre: " + name);
         txtvTelefono.setText(datosObj.getPhone());//"Telefono: "+ phone);
@@ -88,7 +89,7 @@ public class InfoCompleta extends AppCompatActivity {
 
         txtLatitud.setText(datosObj.getLatitud());//latitud);
         txtLongitud.setText(datosObj.getLongitud());//longitud);
-        txtvDireccion.setOnClickListener(new View.OnClickListener() {
+        /*txtvDireccion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String latitud = txtLatitud.getText().toString();
@@ -98,8 +99,7 @@ public class InfoCompleta extends AppCompatActivity {
                 Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(uri));
                 startActivity(intent);
             }
-        });
-
+        });*/
 
         cardView = findViewById(R.id.tarjeta);
         cardViewCarga = findViewById(R.id.cargatarjeta);
@@ -110,6 +110,19 @@ public class InfoCompleta extends AppCompatActivity {
                 cardView.setVisibility(View.VISIBLE);
             }
         }, 1500);
+
+        //inicializando el mapa
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        startActivity(new Intent(this, MainActivity.class));
+
     }
 
     public boolean onTouchEvent(MotionEvent event){
@@ -117,4 +130,43 @@ public class InfoCompleta extends AppCompatActivity {
         return super.onTouchEvent(event);
     }
 
+    @Override
+    public void onMapReady(@NonNull GoogleMap googleMap) {
+        mMapa = googleMap;
+        txtvDireccion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = getIntent();
+                DatosObj datosObj = intent.getParcelableExtra("datosObj");
+
+                txtLatitud.setText(datosObj.getLatitud());//latitud);
+                txtLongitud.setText(datosObj.getLongitud());//longitud);
+
+                String latitud = txtLatitud.getText().toString();
+                String longitud = txtLongitud.getText().toString();
+                String uri = "geo:"+ latitud + " , " + longitud;
+
+                LatLng mexico = new LatLng(Double.parseDouble(latitud), Double.parseDouble(longitud));
+
+
+                mMapa.addMarker(new MarkerOptions().position(mexico).title("Mexico"));
+                mMapa.moveCamera(CameraUpdateFactory.newLatLng(mexico));
+
+            }
+        });
+    }
+
+    //Para dar un solo click se genere
+    @Override
+    public void onMapClick(@NonNull LatLng latLng) {
+        txtLatitud.setText("" + latLng.latitude);
+        txtLongitud.setText(""+ latLng.longitude);
+    }
+
+    //Dejar precionado
+    @Override
+    public void onMapLongClick(@NonNull LatLng latLng) {
+        txtLatitud.setText("" + latLng.latitude);
+        txtLongitud.setText(""+ latLng.longitude);
+    }
 }

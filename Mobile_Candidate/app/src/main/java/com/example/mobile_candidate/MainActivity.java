@@ -2,6 +2,7 @@ package com.example.mobile_candidate;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -63,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         getApiresult("");
         setUpviews();
         setUplistener();
-
+       // setDayNight();
     }
 
     private void getApiresult(String gender){
@@ -85,17 +87,22 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
 
                     apiAdapter = new ApiAdapter(personas,getApplicationContext());
                     recyclerView.setAdapter(apiAdapter);
-
                 }
+
             }
             @Override
             public void onFailure(Call<APIResponse> call, Throwable t) {
-                Toast.makeText(MainActivity.this, t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "No se pudieron cargar los datos, corrobore su conexion", Toast.LENGTH_SHORT).show();
             }
+
         });
 
     }
-
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
     //
     private void setUpviews(){
         resetfiltro = findViewById(R.id.resetfiltro);
@@ -124,7 +131,6 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
                 getApiresult("female");
             }
         });
-
     }
 
 
@@ -138,4 +144,7 @@ public class MainActivity extends AppCompatActivity implements SearchView.OnQuer
         apiAdapter.filtrado(s);
         return false;
     }
+
+
+
 }

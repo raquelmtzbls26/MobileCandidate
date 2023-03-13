@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
 
         initView();
         setVariable();
+
     }
 
     private void setVariable(){
@@ -60,7 +61,9 @@ public class LoginActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(LoginActivity.this, "La contraseña no es correcta", Toast.LENGTH_SHORT).show();
                 }
+                finish();
             }
+
         });
     }
 

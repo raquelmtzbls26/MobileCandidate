@@ -97,6 +97,7 @@ public class ApiAdapter extends RecyclerView.Adapter<ApiAdapter.ViewHolder> {
                 }
 
             }
+
         });
 
     }

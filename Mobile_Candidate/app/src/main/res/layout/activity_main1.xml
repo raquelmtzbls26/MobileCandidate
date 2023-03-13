@@ -51,7 +51,7 @@
                     android:layout_height="wrap_content"
                     android:text="Mujeres"
                     app:chipBackgroundColor="#A0E6EF"
-                    app:chipIcon="@drawable/mujer" />
+                    app:chipIcon="@drawable/baseline_woman_24" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/filtrohombre"
@@ -59,7 +59,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Hombres"
-                    app:chipBackgroundColor="#A0E6EF" />
+                    app:chipBackgroundColor="#A0E6EF"
+                    app:chipIcon="@drawable/baseline_boy_24"/>
 
 
                 <com.google.android.material.chip.Chip
@@ -68,7 +69,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Reset"
-                    app:chipBackgroundColor="#A0E6EF" />
+                    app:chipBackgroundColor="#A0E6EF"
+                    app:chipIcon="@drawable/baseline_cached_24"/>
             </com.google.android.material.chip.ChipGroup>
         </LinearLayout>
 
